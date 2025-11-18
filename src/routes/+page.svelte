@@ -1,6 +1,7 @@
 <script lang="ts">
     import InvoiceStudio from "./Invoice-studio.svelte";
 
+
     let invoiceInf = $state({invoiceFrom:"Jeffrey", invoiceTo: "Victory", invoiceTitle:"INV-00d", invoiceDate:"2025-11-17", note:"Thank you for your business. Payment due within 14 days.", logo:"src/lib/assets/ac.jpeg"})
     let selectedFile = $state(null)
     let items:any = $state([])
@@ -126,7 +127,7 @@
                     </div>
                     <div class="flex items-center gap-2 mt-5 sm:mt-0">
                         <button onclick={() => alert("Saved locally in your browser.")} type="button" class="rounded-xl bg-white px-4 py-2 border border-slate-200 text-sm ">Save</button>
-                        <button onclick={()=> window.print()} type="button" class="rounded-xl bg-gradient-to-r from-indigo-600 to-teal-400 text-white px-4 py-2 text-sm">Print / Explort</button>
+                        <button onclick={()=> window.print()} type="button" class="rounded-xl bg-liner-to-r from-indigo-600 to-teal-400 text-white px-4 py-2 text-sm">Print / Explort</button>
                     </div>
                 </div>
             </form>
