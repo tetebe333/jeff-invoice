@@ -32,7 +32,7 @@
 
 <div class="flex justify-between">
 	<div class="flex gap-3">
-		<img src={invoiceInf.logo} alt="" class="w-20 h-20 rounded-lg" />
+		<img src={invoiceInf.logo} alt="invoice logo" class="w-20 h-20 rounded-lg" />
         <div class="pt-4">
            <h1 class="font-semibold text-lg text-black">{invoiceInf.invoiceFrom}</h1>
 		   <p class="text-xs">123 Main Street — contact@{invoiceInf.invoiceFrom}.example</p>
