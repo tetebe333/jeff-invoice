@@ -127,7 +127,7 @@
                     </div>
                     <div class="flex items-center gap-2 mt-5 sm:mt-0">
                         <button onclick={() => alert("Saved locally in your browser.")} type="button" class="rounded-xl bg-white px-4 py-2 border border-slate-200 text-sm ">Save</button>
-                        <button onclick={()=> window.print()} type="button" class="rounded-xl bg-liner-to-r from-indigo-600 to-teal-400 text-white px-4 py-2 text-sm">Print / Explort</button>
+                        <button onclick={()=> window.print()} type="button" class="rounded-xl bg-linear-to-r from-indigo-600 to-teal-400 text-white px-4 py-2 text-sm">Print / Explort</button>
                     </div>
                 </div>
             </form>
