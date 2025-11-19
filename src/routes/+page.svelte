@@ -122,10 +122,10 @@
                 <div class="sm:flex items-center justify-between gap-3 text-black w-100%">
                     <div class="flex items-center gap-2">
                         <label for="logo" class="text-xs text-slate-500">Logo</label>
-                        <input onchange={logoFunction} type="file" accept="image/*" class="text-xs">
-                        <button onclick={() => invoiceInf.logo = "src/lib/assets/ac.jpeg"} type="button" class="rounded-xl bg-white px-4 py-2 border border-slate-200 text-sm " >Reset</button>
+                        <input onchange={logoFunction} type="file" accept="image/*" class="text-xs w-50">
+                        <button onclick={() => invoiceInf.logo = "src/lib/assets/ac.jpeg"} type="button" class="rounded-xl bg-white px-2 py-2 border border-slate-200 text-sm" >Reset</button>
                     </div>
-                    <div class="flex items-center gap-2 mt-5 sm:mt-0">
+                    <div class="flex items-center gap-2 sm8:mt-5">
                         <button onclick={() => alert("Saved locally in your browser.")} type="button" class="rounded-xl bg-white px-4 py-2 border border-slate-200 text-sm ">Save</button>
                         <button onclick={()=> window.print()} type="button" class="rounded-xl bg-linear-to-r from-indigo-600 to-teal-400 text-white px-4 py-2 text-sm">Print / Explort</button>
                     </div>
