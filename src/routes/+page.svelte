@@ -1,7 +1,6 @@
 <script lang="ts">
     import InvoiceStudio from "./Invoice-studio.svelte";
-
-
+   
     let invoiceInf = $state({invoiceFrom:"Jeffrey", invoiceTo: "Victory", invoiceTitle:"INV-00d", invoiceDate:"2025-11-17", note:"Thank you for your business. Payment due within 14 days.", logo:"src/lib/assets/ac.jpeg"})
     let selectedFile = $state(null)
     let items:any = $state([])
