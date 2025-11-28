@@ -18,12 +18,12 @@
 }
 
 .input{
-    @apply h-12 mt-1 mb-7 p-1 font-normal leading-7 text-black border appearance-none  rounded-lg transition ease-in-out duration-150 bg-clip-padding bg-white border-slate-200 w-full text-base text-slate-700;
+    @apply h-12 mt-1 mb-7 p-1 font-normal leading-7  border appearance-none  rounded-lg transition ease-in-out duration-150 bg-clip-padding bg-white border-slate-200 w-full text-base text-slate-700;
 }
 
 
 .areaInput{
-    @apply h-16 mt-1 mb-7 p-1 font-normal leading-7 text-black border appearance-none  rounded-lg transition ease-in-out duration-150 bg-clip-padding bg-white border-slate-200 w-full text-base text-slate-700;
+    @apply h-16 mt-1 mb-7 p-1 font-normal leading-7  border appearance-none  rounded-lg transition ease-in-out duration-150 bg-clip-padding bg-white border-slate-200 w-full text-base text-slate-700;
 }
 
 .btn{
