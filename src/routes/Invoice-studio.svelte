@@ -29,7 +29,6 @@
     );
   
 </script>
-
 <div class="flex justify-between">
 	<div class="flex gap-3">
 		<img src={invoiceInf.logo} alt="invoice logo" class="w-20 h-20 rounded-lg" />
