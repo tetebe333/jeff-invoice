@@ -3,8 +3,8 @@
     import { persisted } from 'svelte-persisted-store';
     import { onMount } from "svelte";
    
-    //no logo icon
-    let noLogo = "https://www.svgrepo.com/show/451131/no-image.svg"
+    //logostate
+    let logoState = $state(false)
 
     export const invoiceInf = persisted('preferences', {invoiceFrom:"Jeffrey", invoiceTo: "Victory", invoiceTitle:"INV-00d", invoiceDate:"2025-11-17", note:"Thank you for your business. Payment due within 14 days.", logo:"", itemsId:0})
 
@@ -69,7 +69,14 @@
 
     })
 
-    
+     $effect(() => {
+       if ($invoiceInf.logo) {
+        logoState = true
+       } else {
+        logoState = false
+       }
+
+    });
 
     
 </script>
@@ -79,12 +86,14 @@
         <div class="px-4 py-4 ">
             <div class="flex gap-3">
 
-                {#if $invoiceInf.logo}
+                {#if logoState}
                    <img src={$invoiceInf.logo} alt="invoice logo" class="w-20 h-20 rounded-lg">
                    {:else}
-                    <img src={noLogo} alt="invoice logo" class="w-20 h-20 rounded-lg">
+                   <div class="bg-gray-400 h-20 w-22 rounded-2xl flex justify-center items-center">
+                        <p class="font-bold text-black text-xl uppercase">{$invoiceInf.invoiceFrom[0]}</p>
+                    </div>
                 {/if}
-
+                    
                 <div class="pt-4">
                 <h1 class="font-semibold text-xl text-black">Invoice Studio</h1>
                 <p>Beautiful invoices — edit, preview and export</p>
@@ -159,7 +168,7 @@
                     <div class="flex items-center gap-2">
                         <label for="logo" class="text-xs text-slate-500">Logo</label>
                         <input onchange={logoFunction} type="file" accept="image/*" class="text-xs w-50">
-                        <button onclick={() => $invoiceInf.logo = noLogo} type="button" class="rounded-xl bg-white px-2 py-2 border border-slate-200 text-sm" >Reset</button>
+                        <button onclick={() => $invoiceInf.logo = ""} type="button" class="rounded-xl bg-white px-2 py-2 border border-slate-200 text-sm" >Reset</button>
                     </div>
                     <div class="flex items-center gap-2 sm8:mt-5">
                         <button onclick={() => save()} type="button" class="rounded-xl bg-white px-4 py-2 border border-slate-200 text-sm ">Save</button>
@@ -173,7 +182,7 @@
    
     <div id="printable-section" class="bg-white-o rounded-xl mt-6 lg:mt-0 text-sm shadow-xl/20">
         <div class="px-4 py-4">
-          <InvoiceStudio {invoiceInf} {items} {totalPriceSum}/>
+          <InvoiceStudio {invoiceInf} {items} {totalPriceSum} {logoState}/>
         </div>
     </div> 
       
