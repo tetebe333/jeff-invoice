@@ -9,6 +9,7 @@
     export const invoiceInf = persisted('preferences', {invoiceFrom:"Jeffrey", invoiceTo: "Victory", invoiceTitle:"INV-00d", invoiceDate:"2025-11-17", note:"Thank you for your business. Payment due within 14 days.", logo:"", itemsId:0})
 
     let selectedFile = $state(null)
+    let invoicFirstLetter = $derived($invoiceInf.invoiceFrom[0]);
 
     //items and items storage
     let items:any = $state([])
@@ -76,6 +77,12 @@
         logoState = false
        }
 
+       if ($invoiceInf.invoiceFrom.length < 1) {
+        invoicFirstLetter = "AC"
+       } else {
+        invoicFirstLetter = $invoiceInf.invoiceFrom[0]
+       }
+
     });
 
     
@@ -90,7 +97,7 @@
                    <img src={$invoiceInf.logo} alt="invoice logo" class="w-20 h-20 rounded-lg">
                    {:else}
                    <div class="bg-gray-400 h-20 w-22 rounded-2xl flex justify-center items-center">
-                        <p class="font-bold text-black text-xl uppercase">{$invoiceInf.invoiceFrom[0]}</p>
+                        <p class="font-bold text-black text-xl uppercase">{invoicFirstLetter}</p>
                     </div>
                 {/if}
                     
@@ -182,7 +189,7 @@
    
     <div id="printable-section" class="bg-white-o rounded-xl mt-6 lg:mt-0 text-sm shadow-xl/20">
         <div class="px-4 py-4">
-          <InvoiceStudio {invoiceInf} {items} {totalPriceSum} {logoState}/>
+          <InvoiceStudio {invoiceInf} {items} {totalPriceSum} {logoState} {invoicFirstLetter}/>
         </div>
     </div> 
       

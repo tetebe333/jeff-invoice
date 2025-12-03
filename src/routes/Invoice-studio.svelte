@@ -1,6 +1,6 @@
 <script lang="ts">
     //props
-    let {invoiceInf, items, totalPriceSum, logoState,} = $props()
+    let {invoiceInf, items, totalPriceSum, logoState, invoicFirstLetter} = $props()
 
     //getting tax and estimated total value
     let tax = $derived(totalPriceSum / 10);
@@ -35,7 +35,7 @@
             <img src={$invoiceInf.logo} alt="invoice logo" class="w-20 h-20 rounded-lg">
             {:else}
             <div class="bg-gray-400 h-20 w-22 rounded-2xl flex justify-center items-center">
-                <p class="font-bold text-black text-xl uppercase">{$invoiceInf.invoiceFrom[0]}</p>
+                <p class="font-bold text-black text-xl uppercase">{invoicFirstLetter}</p>
             </div>
         {/if}
         <div class="pt-4">
