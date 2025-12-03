@@ -1,9 +1,18 @@
 <script lang="ts">
     import InvoiceStudio from "./Invoice-studio.svelte";
+    import { persisted } from 'svelte-persisted-store';
+    import { onMount } from "svelte";
    
-    let invoiceInf = $state({invoiceFrom:"Jeffrey", invoiceTo: "Victory", invoiceTitle:"INV-00d", invoiceDate:"2025-11-17", note:"Thank you for your business. Payment due within 14 days.", logo:"src/lib/assets/ac.jpeg"})
+    //no logo icon
+    let noLogo = "https://www.svgrepo.com/show/451131/no-image.svg"
+
+    export const invoiceInf = persisted('preferences', {invoiceFrom:"Jeffrey", invoiceTo: "Victory", invoiceTitle:"INV-00d", invoiceDate:"2025-11-17", note:"Thank you for your business. Payment due within 14 days.", logo:"", itemsId:0})
+
     let selectedFile = $state(null)
+
+    //items and items storage
     let items:any = $state([])
+    export const storedItems:any = persisted('items-store', [])
 
     //total price for all items
     const totalPriceSum = $derived(
@@ -12,8 +21,10 @@
     
     //logo function
     const logoFunction = (event: any) => {
-         const files = event.target.files;      
-        if (files.length > 0 && files.length || 0) {
+         const inputElement = event.target; 
+         const files = inputElement.files;
+         
+        if (files && files.length > 0) {
             selectedFile = files[0];
         } else {
             selectedFile = null;
@@ -26,7 +37,7 @@
             reader.onload = function (e:any) {
                 const fileContent = e.target.result;
                  
-                invoiceInf.logo = fileContent;  
+                $invoiceInf.logo = fileContent;  
             }
 
             reader.readAsDataURL(theSelectedFile);
@@ -34,20 +45,46 @@
     }
 
     //creating items function
-    let itemsLength = 0;
     const addItemFunction = () => {
-       itemsLength +=1;
-       const item = {id: itemsLength, description:"New item", qty:1, price:0}
-       items.push(item)
+       $invoiceInf.itemsId +=1;
+       const item = {id:$invoiceInf.itemsId, description:"New item", qty:1, price:0}
+       
+       items.push({...item})
+       
     }
 
+    //saving items to local store
+    function save() {
+        alert("Saved locally in your browser.")
+        $storedItems = [
+             ...items
+	    	]
+    }
+
+    //moving store items to items array on every page reload
+    onMount(() => {
+        items = [
+             ...$storedItems
+	    	]
+
+    })
+
+    
+
+    
 </script>
 
 <main class=" mx-auto lg:max-w-1150 w-90% max-w-900 text-slate-500 text-sm grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-6">
     <div class="bg-white-o rounded-xl shadow-xl/20 ">
         <div class="px-4 py-4 ">
             <div class="flex gap-3">
-                <img src={invoiceInf.logo} alt="invoice logo" class="w-20 h-20 rounded-lg">
+
+                {#if $invoiceInf.logo}
+                   <img src={$invoiceInf.logo} alt="invoice logo" class="w-20 h-20 rounded-lg">
+                   {:else}
+                    <img src={noLogo} alt="invoice logo" class="w-20 h-20 rounded-lg">
+                {/if}
+
                 <div class="pt-4">
                 <h1 class="font-semibold text-xl text-black">Invoice Studio</h1>
                 <p>Beautiful invoices — edit, preview and export</p>
@@ -58,28 +95,28 @@
                 <div class=" grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <label for="form">From (you / company)</label>
-                      <input bind:value={invoiceInf.invoiceFrom} type="text" class="input">
+                      <input bind:value={$invoiceInf.invoiceFrom} type="text" class="input">
                     </div>
                     
                     <div>
                       <label for="Bill To">Bill To</label>
-                      <input bind:value={invoiceInf.invoiceTo} type="text" class="input">
+                      <input bind:value={$invoiceInf.invoiceTo} type="text" class="input">
                     </div>
 
                     <div>
                       <label for="Invoice">Invoice #</label>
-                      <input bind:value={invoiceInf.invoiceTitle} type="text" class="input">
+                      <input bind:value={$invoiceInf.invoiceTitle} type="text" class="input">
                     </div>
                     
                     <div>
                       <label for="Invoice Date">Invoice Date</label>
-                      <input bind:value={invoiceInf.invoiceDate} type="date" class="input">
+                      <input bind:value={$invoiceInf.invoiceDate} type="date" class="input">
                     </div>
                 </div>
                 
 
                 <label for="Notes">Notes</label>
-                <textarea bind:value={invoiceInf.note} name="Notes" id="" class="areaInput"></textarea>
+                <textarea bind:value={$invoiceInf.note} name="Notes" id="" class="areaInput"></textarea>
 
                 <div class="rounded-xl border border-slate-100 overflow-hidden mb-4">
 
@@ -106,7 +143,7 @@
                                     </td>
                                     <td class="px-3 py-2 text-right">
                                         ${item.price * item.qty} 
-                                        <button onclick= {() => items.splice(index, 1)} class="ml-2 text-xs text-slate-500">Delete</button>
+                                        <button onclick= {() =>  items.splice(index, 1)} class="ml-2 text-xs text-slate-500">Delete</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -122,10 +159,10 @@
                     <div class="flex items-center gap-2">
                         <label for="logo" class="text-xs text-slate-500">Logo</label>
                         <input onchange={logoFunction} type="file" accept="image/*" class="text-xs w-50">
-                        <button onclick={() => invoiceInf.logo = "src/lib/assets/ac.jpeg"} type="button" class="rounded-xl bg-white px-2 py-2 border border-slate-200 text-sm" >Reset</button>
+                        <button onclick={() => $invoiceInf.logo = noLogo} type="button" class="rounded-xl bg-white px-2 py-2 border border-slate-200 text-sm" >Reset</button>
                     </div>
                     <div class="flex items-center gap-2 sm8:mt-5">
-                        <button onclick={() => alert("Saved locally in your browser.")} type="button" class="rounded-xl bg-white px-4 py-2 border border-slate-200 text-sm ">Save</button>
+                        <button onclick={() => save()} type="button" class="rounded-xl bg-white px-4 py-2 border border-slate-200 text-sm ">Save</button>
                         <button onclick={()=> window.print()} type="button" class="rounded-xl bg-linear-to-r from-indigo-600 to-teal-400 text-white px-4 py-2 text-sm">Print / Explort</button>
                     </div>
                 </div>

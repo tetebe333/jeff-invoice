@@ -31,23 +31,27 @@
 </script>
 <div class="flex justify-between">
 	<div class="flex gap-3">
-		<img src={invoiceInf.logo} alt="invoice logo" class="w-20 h-20 rounded-lg" />
+		{#if $invoiceInf.logo}
+            <img src={$invoiceInf.logo} alt="invoice logo" class="w-20 h-20 rounded-lg">
+            {:else}
+             <img src="https://www.svgrepo.com/show/451131/no-image.svg" alt="invoice logo" class="w-20 h-20 rounded-lg">
+        {/if}
         <div class="pt-4">
-           <h1 class="font-semibold text-lg text-black">{invoiceInf.invoiceFrom}</h1>
-		   <p class="text-xs">123 Main Street — contact@{invoiceInf.invoiceFrom}.example</p>
+           <h1 class="font-semibold text-lg text-black">{$invoiceInf.invoiceFrom}</h1>
+		   <p class="text-xs">123 Main Street — contact@{$invoiceInf.invoiceFrom}.example</p>
         </div>
 	</div>
 	<div>
        <p class="text-end">Invoice</p>
-       <h1 class="font-semibold text-xl text-black text-end uppercase">{invoiceInf.invoiceTitle}</h1>
-       <p class="text-end">{invoiceInf.invoiceDate}</p>
+       <h1 class="font-semibold text-xl text-black text-end uppercase">{$invoiceInf.invoiceTitle}</h1>
+       <p class="text-end">{$invoiceInf.invoiceDate}</p>
     </div>
 </div>
 
 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
     <div class="mt-7">
         <p>Bill To</p>
-        <h1 class="font-semibold text-base text-black">{invoiceInf.invoiceTo}</h1>
+        <h1 class="font-semibold text-base text-black">{$invoiceInf.invoiceTo}</h1>
     </div>
 
 	<div class="mt-7">
@@ -91,5 +95,5 @@
     </div>
 </div>
 
-<footer class="text-xs mt-5">{invoiceInf.note}</footer>
+<footer class="text-xs mt-5">{$invoiceInf.note}</footer>
 
