@@ -27,7 +27,8 @@
           maximumFractionDigits: 2
         }).format(total)
     );
-  
+
+
 </script>
 <div class="flex justify-between">
 	<div class="flex gap-3">
@@ -72,7 +73,7 @@
 				<th class="w-36 px-4 py-3 text-right">Amount</th>
 			</tr>
 		</thead>
-        {#each items as item, index (index) }
+        {#each items as item (item.id) }
             <tbody class="divide-y divide-slate-100 text-black">
                 <tr class="last:border-none">
                     <td class="px-3 py-2">{item.description}</td>
